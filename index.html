@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,6 +8,7 @@
 <title>Mishang Block Builder</title>
 
 <style>
+
 :root {
     --bg: #15171a;
     --panel: #202329;
@@ -35,7 +37,7 @@ header {
 }
 
 header h1 {
-    margin: 0 0 4px;
+    margin: 0 0 5px;
     font-size: 24px;
 }
 
@@ -45,12 +47,12 @@ header p {
 }
 
 main {
-    max-width: 1450px;
+    max-width: 1600px;
     margin: auto;
     padding: 20px;
 
     display: grid;
-    grid-template-columns: 430px 1fr;
+    grid-template-columns: 480px 1fr;
     gap: 18px;
 }
 
@@ -61,13 +63,18 @@ main {
     padding: 17px;
 }
 
+.section {
+    margin-bottom: 25px;
+}
+
 h2 {
     margin: 0 0 14px;
     font-size: 18px;
 }
 
-.section {
-    margin-bottom: 24px;
+h3 {
+    margin: 15px 0 8px;
+    font-size: 14px;
 }
 
 label {
@@ -77,39 +84,27 @@ label {
     font-size: 12px;
 }
 
-input,
-select,
-button {
-    font: inherit;
-}
-
 input[type="text"],
+input[type="number"],
 select {
     width: 100%;
     padding: 8px 9px;
-
     color: var(--text);
     background: var(--panel2);
-
     border: 1px solid var(--border);
     border-radius: 6px;
 }
 
-input:focus,
-select:focus {
-    outline: none;
-    border-color: var(--accent);
+input[type="number"] {
+    width: 90px;
 }
 
 button {
     padding: 8px 11px;
-
     color: var(--text);
     background: var(--panel2);
-
     border: 1px solid var(--border);
     border-radius: 6px;
-
     cursor: pointer;
 }
 
@@ -122,10 +117,6 @@ button.primary {
     border-color: #4d82c8;
 }
 
-button.primary:hover {
-    background: #3c70b5;
-}
-
 .row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -134,8 +125,8 @@ button.primary:hover {
 
 .buttons {
     display: flex;
-    gap: 7px;
     flex-wrap: wrap;
+    gap: 7px;
 }
 
 .help {
@@ -144,23 +135,22 @@ button.primary:hover {
     line-height: 1.45;
 }
 
-.face-row {
-    display: grid;
-    grid-template-columns: 65px 1fr;
-    gap: 7px;
+.info-box {
+    padding: 10px;
+    margin-top: 10px;
 
-    align-items: center;
-    margin: 8px 0;
-}
+    background: #191c20;
+    border: 1px solid var(--border);
+    border-radius: 6px;
 
-.face-row label {
-    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 .texture-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
     gap: 7px;
 
     max-height: 250px;
@@ -171,7 +161,6 @@ button.primary:hover {
     padding: 4px;
 
     background: var(--panel2);
-
     border: 1px solid var(--border);
     border-radius: 6px;
 
@@ -184,10 +173,8 @@ button.primary:hover {
 
 .texture img {
     display: block;
-
     width: 100%;
     aspect-ratio: 1;
-
     object-fit: contain;
 
     background: #555;
@@ -207,11 +194,51 @@ button.primary:hover {
     text-overflow: ellipsis;
 }
 
-.preview-layout {
+.face-row {
     display: grid;
-    grid-template-columns: minmax(400px, 1fr) 430px;
+    grid-template-columns: 70px 1fr;
+    gap: 8px;
 
-    gap: 16px;
+    align-items: center;
+
+    margin: 8px 0;
+}
+
+.face-row label {
+    margin: 0;
+}
+
+.angle-row {
+    display: grid;
+    grid-template-columns: 1fr 100px;
+    gap: 8px;
+
+    align-items: center;
+
+    margin: 7px 0;
+}
+
+.angle-name {
+    font-family: Consolas, monospace;
+    color: var(--accent);
+    font-size: 12px;
+}
+
+.model-box {
+    margin-bottom: 12px;
+    padding: 10px;
+
+    background: #191c20;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+}
+
+.model-box-title {
+    margin-bottom: 8px;
+
+    color: var(--accent);
+    font-family: Consolas, monospace;
+    font-size: 12px;
 }
 
 #viewport {
@@ -243,6 +270,7 @@ button.primary:hover {
     padding: 8px 10px;
 
     color: #d0d5dc;
+
     background: rgba(10, 12, 15, .75);
 
     border-radius: 6px;
@@ -250,6 +278,28 @@ button.primary:hover {
     font-size: 12px;
 
     pointer-events: none;
+}
+
+.preview-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(400px, 1fr)
+        500px;
+
+    gap: 16px;
+}
+
+.current-orientation {
+    margin-bottom: 10px;
+
+    padding: 10px;
+
+    background: #191c20;
+
+    border: 1px solid var(--border);
+
+    border-radius: 6px;
 }
 
 .tabs {
@@ -274,9 +324,11 @@ pre {
     overflow: auto;
 
     color: #e6e9ed;
+
     background: #101215;
 
     border: 1px solid var(--border);
+
     border-radius: 7px;
 
     font-family: Consolas, monospace;
@@ -292,16 +344,18 @@ pre {
     background: #191c20;
 
     border: 1px solid var(--border);
+
     border-radius: 6px;
 
     color: #c9ced6;
 
     font-family: Consolas, monospace;
     font-size: 11px;
+
     line-height: 1.6;
 }
 
-@media (max-width: 1050px) {
+@media (max-width: 1200px) {
 
     main {
         grid-template-columns: 1fr;
@@ -312,418 +366,514 @@ pre {
     }
 
 }
-</style>
-</head>
 
+</style>
+
+</head>
 
 <body>
 
 <header>
 
-    <h1>Mishang Block Builder</h1>
+```
+<h1>Mishang Block Builder</h1>
 
-    <p>
-        Minecraft 1.20.1 Fabric blockstate/model generator
-        with real PNG textures and an interactive 3D preview.
-    </p>
+<p>
+    Minecraft 1.20.1 Fabric blockstate and model generator
+</p>
+```
 
 </header>
 
-
 <main>
 
-
-<!-- ========================================================= -->
-<!-- LEFT PANEL -->
-<!-- ========================================================= -->
+<!-- =========================================================
+     LEFT SIDE
+========================================================= -->
 
 <section class="panel">
 
+<!-- BLOCK -->
 
 <div class="section">
 
-    <h2>Block</h2>
+```
+<h2>Block</h2>
 
-    <div class="row">
+<div class="row">
 
-        <div>
+    <div>
 
-            <label>
-                Mod ID
-            </label>
+        <label>Mod ID</label>
 
-            <input
-                id="modId"
-                type="text"
-                value="red_mishanguc_roads"
-            >
-
-        </div>
-
-
-        <div>
-
-            <label>
-                Block ID
-            </label>
-
-            <input
-                id="blockId"
-                type="text"
-                value="road_with_red_line"
-            >
-
-        </div>
+        <input
+            id="modId"
+            type="text"
+            value="red_mishanguc_roads"
+        >
 
     </div>
 
 
-    <div style="margin-top:10px">
+    <div>
 
-        <label>
-            Model type
-        </label>
+        <label>Block ID</label>
 
-        <select id="modelType">
-
-            <option value="cube">
-                Cube
-            </option>
-
-            <option value="cube_all">
-                Cube All
-            </option>
-
-        </select>
+        <input
+            id="blockId"
+            type="text"
+            value="white_straight_line"
+        >
 
     </div>
 
 </div>
 
 
-<!-- ========================================================= -->
-<!-- TEXTURE LIBRARY -->
-<!-- ========================================================= -->
+<div style="margin-top:10px">
 
-<div class="section">
+    <label>Block Type</label>
 
-    <h2>
-        Texture Library
-    </h2>
+    <select id="blockType">
 
+        <option value="axis">
+            Axis
+        </option>
 
-    <div class="buttons">
+        <option value="facing">
+            Facing
+        </option>
 
-        <button id="loadFolder">
-            Load texture folder
-        </button>
+        <option value="diagonal">
+            Diagonal Facing
+        </option>
 
-        <button id="loadFiles">
-            Add PNGs
-        </button>
+        <option value="axis_diagonal">
+            Axis + Diagonal Facing
+        </option>
 
-    </div>
-
-
-    <input
-        id="folderInput"
-        type="file"
-        webkitdirectory
-        multiple
-        accept="image/png"
-        hidden
-    >
-
-
-    <input
-        id="filesInput"
-        type="file"
-        multiple
-        accept="image/png"
-        hidden
-    >
-
-
-    <p class="help">
-
-        Your PNG files stay in your browser.
-        They are not uploaded anywhere.
-
-    </p>
-
-
-    <div
-        id="textureList"
-        class="texture-list"
-    ></div>
+    </select>
 
 </div>
 
 
-<!-- ========================================================= -->
-<!-- FACES -->
-<!-- ========================================================= -->
+<div class="info-box">
+
+    <strong>Rotation system</strong><br><br>
+
+    The block itself remains a normal cube.
+    The blockstate controls the model's Y rotation.
+
+    <br><br>
+
+    Diagonal Facing is therefore not a special
+    diagonal-shaped block. It is simply a
+    four-direction property whose model is rotated.
+
+</div>
+```
+
+</div>
+
+<!-- TEXTURES -->
 
 <div class="section">
 
-    <h2>
-        Block Faces
-    </h2>
+```
+<h2>Texture Library</h2>
 
+<div class="buttons">
 
-    <div id="faces"></div>
+    <button id="loadFolder">
+        Load texture folder
+    </button>
 
-
-    <div class="buttons">
-
-        <button id="sameTop">
-            Set all to top
-        </button>
-
-
-        <button id="sameFirst">
-            Set all to first texture
-        </button>
-
-    </div>
+    <button id="loadFiles">
+        Add PNGs
+    </button>
 
 </div>
 
 
-<!-- ========================================================= -->
-<!-- RESOURCE PATH -->
-<!-- ========================================================= -->
+<input
+    id="folderInput"
+    type="file"
+    webkitdirectory
+    multiple
+    accept="image/png"
+    hidden
+>
+
+
+<input
+    id="filesInput"
+    type="file"
+    multiple
+    accept="image/png"
+    hidden
+>
+
+
+<p class="help">
+
+    Your PNG files stay in your browser.
+    Nothing is uploaded.
+
+</p>
+
+
+<div
+    id="textureList"
+    class="texture-list"
+></div>
+```
+
+</div>
+
+<!-- TEXTURES -->
 
 <div class="section">
 
-    <h2>
-        Resource Paths
-    </h2>
+```
+<h2>Model Textures</h2>
 
+<div id="modelTextureEditors"></div>
+```
 
-    <div class="row">
+</div>
 
-        <div>
+<!-- ANGLES -->
 
-            <label>
-                Default namespace
-            </label>
+<div class="section">
 
-            <input
-                id="namespace"
-                type="text"
-                value="mishanguc"
-            >
+```
+<h2>Facing Angles</h2>
 
-        </div>
+<div class="info-box">
 
+    These values are the Minecraft blockstate
+    <code>y</code> rotations.
 
-        <div>
+    <br><br>
 
-            <label>
-                Texture folder
-            </label>
+    0° = no rotation<br>
+    90° = quarter turn<br>
+    180° = half turn<br>
+    270° = three-quarter turn
 
-            <input
-                id="textureFolder"
-                type="text"
-                value="block"
-            >
+    <br><br>
 
-        </div>
-
-    </div>
-
-
-    <p class="help">
-
-        The PNG is used for the preview.
-        The resource location is used in the generated JSON.
-
-    </p>
+    Diagonal defaults are 45°, 135°, 225°
+    and 315°.
 
 </div>
 
 
-<!-- ========================================================= -->
+<h3>Custom Facing Angles</h3>
+
+<div class="buttons">
+
+    <button id="defaultAngles">
+        Restore default angles
+    </button>
+
+</div>
+
+
+<div id="angleEditor"></div>
+```
+
+</div>
+
 <!-- OUTPUT -->
-<!-- ========================================================= -->
 
 <div class="section">
 
-    <h2>
-        Output
-    </h2>
+```
+<h2>Output</h2>
 
+<div id="paths" class="paths"></div>
 
-    <div
-        id="paths"
-        class="paths"
-    ></div>
+<div
+    class="buttons"
+    style="margin-top:10px"
+>
 
-
-    <div
-        class="buttons"
-        style="margin-top:10px"
+    <button
+        id="copy"
+        class="primary"
     >
+        Copy JSON
+    </button>
 
-        <button
-            id="copy"
-            class="primary"
+    <button
+        id="download"
+        class="primary"
+    >
+        Download JSON
+    </button>
+
+</div>
+```
+
+</div>
+
+</section>
+
+<!-- =========================================================
+     RIGHT SIDE
+========================================================= -->
+
+<section class="panel">
+
+```
+<h2>3D Preview</h2>
+
+
+<div class="preview-layout">
+
+
+    <div id="viewport">
+
+        <div class="controls-help">
+
+            Left drag: rotate<br>
+            Wheel: zoom<br>
+            Middle drag: pan<br>
+            Double-click: reset
+
+        </div>
+
+    </div>
+
+
+    <div>
+
+
+        <div class="current-orientation">
+
+            <label>
+                Preview orientation
+            </label>
+
+            <select
+                id="previewOrientation"
+            ></select>
+
+        </div>
+
+
+        <div class="tabs">
+
+            <button
+                id="blockstateTab"
+                class="active"
+            >
+                blockstate.json
+            </button>
+
+            <button id="modelTab">
+                model.json
+            </button>
+
+        </div>
+
+
+        <pre id="json"></pre>
+
+
+        <div
+            class="buttons"
+            style="margin-top:10px"
         >
-            Copy JSON
-        </button>
 
+            <button id="wireframe">
+                Toggle wireframe
+            </button>
 
-        <button
-            id="download"
-            class="primary"
-        >
-            Download JSON files
-        </button>
+            <button id="reset">
+                Reset view
+            </button>
+
+        </div>
+
 
     </div>
 
 </div>
-
-
-</section>
-
-
-<!-- ========================================================= -->
-<!-- RIGHT PANEL -->
-<!-- ========================================================= -->
-
-<section class="panel">
-
-    <h2>
-        3D Preview
-    </h2>
-
-
-    <div class="preview-layout">
-
-
-        <div id="viewport">
-
-            <div class="controls-help">
-
-                Left drag: rotate<br>
-                Wheel: zoom<br>
-                Middle drag: pan<br>
-                Double-click: reset
-
-            </div>
-
-        </div>
-
-
-        <div>
-
-
-            <div class="tabs">
-
-                <button
-                    id="blockstateTab"
-                    class="active"
-                >
-                    blockstate.json
-                </button>
-
-
-                <button
-                    id="modelTab"
-                >
-                    model.json
-                </button>
-
-            </div>
-
-
-            <pre id="json"></pre>
-
-
-            <div
-                class="buttons"
-                style="margin-top:10px"
-            >
-
-                <button id="wireframe">
-                    Toggle wireframe
-                </button>
-
-
-                <button id="reset">
-                    Reset view
-                </button>
-
-            </div>
-
-
-        </div>
-
-
-    </div>
+```
 
 </section>
-
 
 </main>
-
-
-<!-- ========================================================= -->
-<!-- THREE.JS -->
-<!-- ========================================================= -->
 
 <script type="importmap">
 
 {
     "imports": {
+
         "three":
             "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
 
         "three/addons/":
             "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+
     }
 }
 
 </script>
 
-
 <script type="module">
 
-import * as THREE
-    from "three";
-
+import * as THREE from "three";
 
 import {
     OrbitControls
+} from "three/addons/controls/OrbitControls.js";
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+const $ =
+    id => document.getElementById(id);
+
+
+function cleanId(value) {
+
+    return value
+        .trim()
+        .toLowerCase()
+        .replace(
+            /[^a-z0-9._-]/g,
+            "_"
+        );
+
 }
-from "three/addons/controls/OrbitControls.js";
 
 
+function escapeHtml(value) {
 
-/* ============================================================
-   APPLICATION STATE
-   ============================================================ */
+    return value.replace(
+        /[&<>"']/g,
+        character => ({
 
-const faces = [
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
 
-    "top",
-    "bottom",
-    "north",
-    "south",
-    "west",
-    "east"
+        })[character]
+    );
 
-];
+}
 
+
+/* =========================================================
+   STATE
+========================================================= */
 
 const state = {
 
     library: [],
 
-    textures: {},
+    /*
+     * Two possible models.
+     *
+     * Axis:
+     *   modelA
+     *
+     * Facing:
+     *   modelA
+     *
+     * Diagonal:
+     *   modelA
+     *
+     * Axis + diagonal:
+     *   modelX
+     *   modelZ
+     */
+
+    models: {
+
+        modelA: {
+
+            name: "",
+
+            textures: {
+
+                top: null,
+                bottom: null,
+                north: null,
+                south: null,
+                west: null,
+                east: null
+
+            }
+
+        },
+
+
+        modelX: {
+
+            name: "",
+
+            textures: {
+
+                top: null,
+                bottom: null,
+                north: null,
+                south: null,
+                west: null,
+                east: null
+
+            }
+
+        },
+
+
+        modelZ: {
+
+            name: "",
+
+            textures: {
+
+                top: null,
+                bottom: null,
+                north: null,
+                south: null,
+                west: null,
+                east: null
+
+            }
+
+        }
+
+    },
+
+
+    /*
+     * Default Minecraft-facing angles.
+     */
+
+    angles: {
+
+        north: 0,
+        east: 90,
+        south: 180,
+        west: 270,
+
+        north_east: 45,
+        south_east: 135,
+        south_west: 225,
+        north_west: 315
+
+    },
+
+
+    previewOrientation: "",
 
     activeTab: "blockstate",
 
@@ -732,37 +882,1231 @@ const state = {
 };
 
 
-for (const face of faces) {
+/* =========================================================
+   ORIENTATIONS
+========================================================= */
 
-    state.textures[face] = null;
+function getOrientations() {
+
+    const type =
+        $("blockType").value;
+
+
+    if (type === "axis") {
+
+        return [
+
+            "axis=x",
+            "axis=z"
+
+        ];
+
+    }
+
+
+    if (type === "facing") {
+
+        return [
+
+            "facing=north",
+            "facing=east",
+            "facing=south",
+            "facing=west"
+
+        ];
+
+    }
+
+
+    if (type === "diagonal") {
+
+        return [
+
+            "facing=north_east",
+            "facing=south_east",
+            "facing=south_west",
+            "facing=north_west"
+
+        ];
+
+    }
+
+
+    if (type === "axis_diagonal") {
+
+        return [
+
+            "axis=x,facing=north_east",
+            "axis=x,facing=south_east",
+            "axis=x,facing=south_west",
+            "axis=x,facing=north_west",
+
+            "axis=z,facing=north_east",
+            "axis=z,facing=south_east",
+            "axis=z,facing=south_west",
+            "axis=z,facing=north_west"
+
+        ];
+
+    }
+
+
+    return [];
 
 }
 
 
+/* =========================================================
+   MODEL SETUP
+========================================================= */
 
-/* ============================================================
-   SHORTCUT
-   ============================================================ */
+function setupModelNames() {
 
-function $(id) {
+    const block =
+        cleanId(
+            $("blockId").value
+        );
 
-    return document.getElementById(id);
+
+    const type =
+        $("blockType").value;
+
+
+    if (
+        !state.models.modelA.name
+    ) {
+
+        state.models.modelA.name =
+            block;
+
+    }
+
+
+    if (
+        !state.models.modelX.name
+    ) {
+
+        state.models.modelX.name =
+            block + "_x";
+
+    }
+
+
+    if (
+        !state.models.modelZ.name
+    ) {
+
+        state.models.modelZ.name =
+            block + "_z";
+
+    }
+
+
+    /*
+     * For a type change from
+     * Axis + Diagonal back to a
+     * single-model type, model A
+     * remains the main model.
+     */
 
 }
 
 
+/* =========================================================
+   TEXTURE LIBRARY
+========================================================= */
 
-/* ============================================================
-   THREE.JS SCENE
-   ============================================================ */
+async function addFiles(files) {
+
+    for (
+        const file of files
+    ) {
+
+        if (
+            !file.name
+                .toLowerCase()
+                .endsWith(".png")
+        ) {
+
+            continue;
+
+        }
+
+
+        const url =
+            URL.createObjectURL(
+                file
+            );
+
+
+        state.library.push({
+
+            id:
+                crypto.randomUUID(),
+
+            name:
+                file.name,
+
+            path:
+                file.webkitRelativePath ||
+                file.name,
+
+            url
+
+        });
+
+    }
+
+
+    if (
+        state.library.length === 0
+    ) {
+
+        return;
+
+    }
+
+
+    /*
+     * Use the first loaded texture
+     * as the initial texture on all
+     * models/faces.
+     */
+
+    const first =
+        state.library[0];
+
+
+    for (
+        const model
+        of Object.values(
+            state.models
+        )
+    ) {
+
+        for (
+            const face
+            of Object.keys(
+                model.textures
+            )
+        ) {
+
+            if (
+                !model.textures[face]
+            ) {
+
+                model.textures[face] =
+                    first;
+
+            }
+
+        }
+
+    }
+
+
+    renderTextureLibrary();
+    renderModelTextureEditors();
+    updateAll();
+
+}
+
+
+$("loadFolder").onclick =
+    () =>
+        $("folderInput").click();
+
+
+$("loadFiles").onclick =
+    () =>
+        $("filesInput").click();
+
+
+$("folderInput").onchange =
+    event =>
+        addFiles(
+            [...event.target.files]
+        );
+
+
+$("filesInput").onchange =
+    event =>
+        addFiles(
+            [...event.target.files]
+        );
+
+
+/* =========================================================
+   TEXTURE LIBRARY UI
+========================================================= */
+
+function renderTextureLibrary() {
+
+    const container =
+        $("textureList");
+
+
+    container.innerHTML = "";
+
+
+    if (
+        state.library.length === 0
+    ) {
+
+        container.innerHTML =
+            `<div class="help">
+                No PNG textures loaded.
+            </div>`;
+
+        return;
+
+    }
+
+
+    for (
+        const texture
+        of state.library
+    ) {
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+
+        element.className =
+            "texture";
+
+
+        element.innerHTML = `
+
+            <img src="${texture.url}">
+
+            <div class="texture-name">
+                ${escapeHtml(
+                    texture.name
+                )}
+            </div>
+
+        `;
+
+
+        container.appendChild(
+            element
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   MODEL TEXTURE EDITORS
+========================================================= */
+
+function renderModelTextureEditors() {
+
+    setupModelNames();
+
+
+    const container =
+        $("modelTextureEditors");
+
+
+    container.innerHTML = "";
+
+
+    const type =
+        $("blockType").value;
+
+
+    const models = [];
+
+
+    if (
+        type === "axis_diagonal"
+    ) {
+
+        models.push(
+            ["modelX", "Axis X model"],
+            ["modelZ", "Axis Z model"]
+        );
+
+    } else {
+
+        models.push(
+            ["modelA", "Model"]
+        );
+
+    }
+
+
+    for (
+        const [key, title]
+        of models
+    ) {
+
+        const model =
+            state.models[key];
+
+
+        const box =
+            document.createElement(
+                "div"
+            );
+
+
+        box.className =
+            "model-box";
+
+
+        const titleElement =
+            document.createElement(
+                "div"
+            );
+
+
+        titleElement.className =
+            "model-box-title";
+
+
+        titleElement.textContent =
+            title;
+
+
+        box.appendChild(
+            titleElement
+        );
+
+
+        const nameLabel =
+            document.createElement(
+                "label"
+            );
+
+
+        nameLabel.textContent =
+            "Model name";
+
+
+        box.appendChild(
+            nameLabel
+        );
+
+
+        const nameInput =
+            document.createElement(
+                "input"
+            );
+
+
+        nameInput.type =
+            "text";
+
+
+        nameInput.value =
+            model.name;
+
+
+        nameInput.addEventListener(
+            "input",
+            () => {
+
+                model.name =
+                    cleanId(
+                        nameInput.value
+                    );
+
+                updateAll();
+
+            }
+        );
+
+
+        box.appendChild(
+            nameInput
+        );
+
+
+        for (
+            const face of [
+                "top",
+                "bottom",
+                "north",
+                "south",
+                "west",
+                "east"
+            ]
+        ) {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "face-row";
+
+
+            const label =
+                document.createElement(
+                    "label"
+                );
+
+
+            label.textContent =
+                face;
+
+
+            row.appendChild(label);
+
+
+            const select =
+                document.createElement(
+                    "select"
+                );
+
+
+            for (
+                const texture
+                of state.library
+            ) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    texture.id;
+
+
+                option.textContent =
+                    texture.name;
+
+
+                select.appendChild(
+                    option
+                );
+
+            }
+
+
+            if (
+                model.textures[face]
+            ) {
+
+                select.value =
+                    model.textures[
+                        face
+                    ].id;
+
+            }
+
+
+            select.onchange =
+                () => {
+
+                    model.textures[face] =
+                        state.library.find(
+                            texture =>
+                                texture.id ===
+                                select.value
+                        );
+
+
+                    updateAll();
+
+                };
+
+
+            row.appendChild(
+                select
+            );
+
+
+            box.appendChild(
+                row
+            );
+
+        }
+
+
+        container.appendChild(
+            box
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ANGLE EDITOR
+========================================================= */
+
+function renderAngleEditor() {
+
+    const container =
+        $("angleEditor");
+
+
+    container.innerHTML = "";
+
+
+    const type =
+        $("blockType").value;
+
+
+    let directions = [];
+
+
+    if (
+        type === "facing"
+    ) {
+
+        directions = [
+            "north",
+            "east",
+            "south",
+            "west"
+        ];
+
+    }
+
+
+    if (
+        type === "diagonal" ||
+        type === "axis_diagonal"
+    ) {
+
+        directions = [
+            "north_east",
+            "south_east",
+            "south_west",
+            "north_west"
+        ];
+
+    }
+
+
+    if (
+        directions.length === 0
+    ) {
+
+        container.innerHTML =
+            `<div class="help">
+                This block type does not use
+                a facing angle.
+            </div>`;
+
+        return;
+
+    }
+
+
+    for (
+        const direction
+        of directions
+    ) {
+
+        const row =
+            document.createElement(
+                "div"
+            );
+
+
+        row.className =
+            "angle-row";
+
+
+        const name =
+            document.createElement(
+                "div"
+            );
+
+
+        name.className =
+            "angle-name";
+
+
+        name.textContent =
+            "facing=" +
+            direction;
+
+
+        row.appendChild(name);
+
+
+        const input =
+            document.createElement(
+                "input"
+            );
+
+
+        input.type =
+            "number";
+
+
+        input.step =
+            "1";
+
+
+        input.value =
+            state.angles[
+                direction
+            ];
+
+
+        input.addEventListener(
+            "input",
+            () => {
+
+                state.angles[
+                    direction
+                ] =
+                    Number(
+                        input.value
+                    ) || 0;
+
+                updateAll();
+
+            }
+        );
+
+
+        row.appendChild(input);
+
+
+        container.appendChild(row);
+
+    }
+
+}
+
+
+/* =========================================================
+   ROTATION
+========================================================= */
+
+function getRotation(
+    direction
+) {
+
+    return state.angles[
+        direction
+    ] ?? 0;
+
+}
+
+
+/*
+ * Minecraft blockstate rotation.
+ *
+ * Axis:
+ *
+ * axis=z -> 0
+ * axis=x -> 90
+ *
+ * This assumes the base model is
+ * oriented along Z.
+ */
+
+function getAxisRotation(
+    axis
+) {
+
+    if (
+        axis === "x"
+    ) {
+
+        return 90;
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* =========================================================
+   PARSE ORIENTATION
+========================================================= */
+
+function parseOrientation(
+    orientation
+) {
+
+    const result = {};
+
+
+    for (
+        const part
+        of orientation.split(",")
+    ) {
+
+        const [
+            key,
+            value
+        ] =
+            part.split("=");
+
+
+        result[key] =
+            value;
+
+    }
+
+
+    return result;
+
+}
+
+
+/* =========================================================
+   MODEL FOR ORIENTATION
+========================================================= */
+
+function getModelForOrientation(
+    orientation
+) {
+
+    const type =
+        $("blockType").value;
+
+
+    if (
+        type === "axis_diagonal"
+    ) {
+
+        const parsed =
+            parseOrientation(
+                orientation
+            );
+
+
+        if (
+            parsed.axis === "x"
+        ) {
+
+            return state.models.modelX;
+
+        }
+
+
+        return state.models.modelZ;
+
+    }
+
+
+    return state.models.modelA;
+
+}
+
+
+/* =========================================================
+   ROTATION FOR ORIENTATION
+========================================================= */
+
+function getOrientationRotation(
+    orientation
+) {
+
+    const type =
+        $("blockType").value;
+
+
+    const parsed =
+        parseOrientation(
+            orientation
+        );
+
+
+    /*
+     * AXIS
+     */
+
+    if (
+        type === "axis"
+    ) {
+
+        return getAxisRotation(
+            parsed.axis
+        );
+
+    }
+
+
+    /*
+     * FACING
+     */
+
+    if (
+        type === "facing"
+    ) {
+
+        return getRotation(
+            parsed.facing
+        );
+
+    }
+
+
+    /*
+     * DIAGONAL
+     */
+
+    if (
+        type === "diagonal"
+    ) {
+
+        return getRotation(
+            parsed.facing
+        );
+
+    }
+
+
+    /*
+     * AXIS + DIAGONAL
+     *
+     * Axis selects which of the
+     * two models is used.
+     *
+     * Facing selects its rotation.
+     */
+
+    if (
+        type === "axis_diagonal"
+    ) {
+
+        return getRotation(
+            parsed.facing
+        );
+
+    }
+
+
+    return 0;
+
+}
+
+
+/* =========================================================
+   TEXTURE RESOURCE PATH
+========================================================= */
+
+function getResourceLocation(
+    texture
+) {
+
+    if (!texture) {
+
+        return "minecraft:block/missing";
+
+    }
+
+
+    const namespace =
+        $("modId")
+            .value
+            .trim() ||
+        "red_mishanguc_roads";
+
+
+    let path =
+        texture.path
+            .replaceAll(
+                "\\",
+                "/"
+            );
+
+
+    const marker =
+        "/textures/";
+
+
+    const index =
+        path.indexOf(marker);
+
+
+    if (
+        index !== -1
+    ) {
+
+        path =
+            path.substring(
+                index + marker.length
+            );
+
+    }
+
+
+    path =
+        path.replace(
+            /^textures\//,
+            ""
+        );
+
+
+    path =
+        path.replace(
+            /\.png$/i,
+            ""
+        );
+
+
+    return (
+        namespace +
+        ":" +
+        path
+    );
+
+}
+
+
+/* =========================================================
+   MODEL JSON
+========================================================= */
+
+function generateModel(
+    model
+) {
+
+    return {
+
+        parent:
+            "minecraft:block/cube",
+
+        textures: {
+
+            particle:
+                getResourceLocation(
+                    model.textures.top
+                ),
+
+            down:
+                getResourceLocation(
+                    model.textures.bottom
+                ),
+
+            up:
+                getResourceLocation(
+                    model.textures.top
+                ),
+
+            north:
+                getResourceLocation(
+                    model.textures.north
+                ),
+
+            south:
+                getResourceLocation(
+                    model.textures.south
+                ),
+
+            west:
+                getResourceLocation(
+                    model.textures.west
+                ),
+
+            east:
+                getResourceLocation(
+                    model.textures.east
+                )
+
+        }
+
+    };
+
+}
+
+
+/* =========================================================
+   BLOCKSTATE JSON
+========================================================= */
+
+function generateBlockstate() {
+
+    const variants = {};
+
+
+    for (
+        const orientation
+        of getOrientations()
+    ) {
+
+        const model =
+            getModelForOrientation(
+                orientation
+            );
+
+
+        const rotation =
+            getOrientationRotation(
+                orientation
+            );
+
+
+        const entry = {
+
+            model:
+                `${cleanId(
+                    $("modId").value
+                )}:block/${model.name}`
+
+        };
+
+
+        /*
+         * Only include y when
+         * a rotation is actually needed.
+         */
+
+        if (
+            rotation !== 0
+        ) {
+
+            entry.y =
+                rotation;
+
+        }
+
+
+        variants[
+            orientation
+        ] = entry;
+
+    }
+
+
+    return {
+
+        variants
+
+    };
+
+}
+
+
+/* =========================================================
+   MODEL FILE LIST
+========================================================= */
+
+function getModelFiles() {
+
+    const type =
+        $("blockType").value;
+
+
+    if (
+        type === "axis_diagonal"
+    ) {
+
+        return [
+
+            state.models.modelX,
+
+            state.models.modelZ
+
+        ];
+
+    }
+
+
+    return [
+
+        state.models.modelA
+
+    ];
+
+}
+
+
+/* =========================================================
+   UPDATE JSON VIEW
+========================================================= */
+
+function updateJSON() {
+
+    const type =
+        $("blockType").value;
+
+
+    if (
+        state.activeTab ===
+        "blockstate"
+    ) {
+
+        $("json").textContent =
+            JSON.stringify(
+                generateBlockstate(),
+                null,
+                2
+            );
+
+
+        const modId =
+            cleanId(
+                $("modId").value
+            );
+
+
+        const blockId =
+            cleanId(
+                $("blockId").value
+            );
+
+
+        $("paths").textContent =
+            `assets/${modId}/blockstates/${blockId}.json`;
+
+        return;
+
+    }
+
+
+    const model =
+        getModelForOrientation(
+            state.previewOrientation
+        );
+
+
+    $("json").textContent =
+        JSON.stringify(
+            generateModel(model),
+            null,
+            2
+        );
+
+
+    const modId =
+        cleanId(
+            $("modId").value
+        );
+
+
+    $("paths").textContent =
+        `assets/${modId}/models/block/${model.name}.json`;
+
+}
+
+
+/* =========================================================
+   PREVIEW
+========================================================= */
 
 const scene =
     new THREE.Scene();
 
 
 scene.background =
-    new THREE.Color(0x101215);
-
+    new THREE.Color(
+        0x101215
+    );
 
 
 const camera =
@@ -781,10 +2125,11 @@ camera.position.set(
 );
 
 
-
 const renderer =
     new THREE.WebGLRenderer({
+
         antialias: true
+
     });
 
 
@@ -805,7 +2150,6 @@ $("viewport").appendChild(
 );
 
 
-
 const controls =
     new OrbitControls(
         camera,
@@ -817,13 +2161,6 @@ controls.enableDamping =
     true;
 
 
-controls.target.set(
-    0,
-    0,
-    0
-);
-
-
 controls.minDistance =
     2.2;
 
@@ -831,11 +2168,6 @@ controls.minDistance =
 controls.maxDistance =
     10;
 
-
-
-/* ============================================================
-   LIGHTING
-   ============================================================ */
 
 scene.add(
     new THREE.HemisphereLight(
@@ -846,29 +2178,24 @@ scene.add(
 );
 
 
-const directional =
+const light =
     new THREE.DirectionalLight(
         0xffffff,
         2.5
     );
 
 
-directional.position.set(
+light.position.set(
     4,
     7,
     5
 );
 
 
-scene.add(
-    directional
-);
+scene.add(light);
 
 
-
-/* ============================================================
-   GRID
-   ============================================================ */
+/* GRID */
 
 const grid =
     new THREE.GridHelper(
@@ -886,10 +2213,7 @@ grid.position.y =
 scene.add(grid);
 
 
-
-/* ============================================================
-   CUBE
-   ============================================================ */
+/* CUBE */
 
 const geometry =
     new THREE.BoxGeometry(
@@ -902,12 +2226,20 @@ const geometry =
 const materials = [];
 
 
-for (let i = 0; i < 6; i++) {
+for (
+    let i = 0;
+    i < 6;
+    i++
+) {
 
     materials.push(
+
         new THREE.MeshStandardMaterial({
-            color: 0x666666
+
+            color: 0xffffff
+
         })
+
     );
 
 }
@@ -923,100 +2255,241 @@ const cube =
 scene.add(cube);
 
 
+/* WIREFRAME */
 
-/* ============================================================
-   WIREFRAME
-   ============================================================ */
-
-const wireGeometry =
+const edges =
     new THREE.EdgesGeometry(
         geometry
     );
 
 
-const wireMaterial =
-    new THREE.LineBasicMaterial({
-        color: 0xffffff
-    });
-
-
-const wireframe =
+const wire =
     new THREE.LineSegments(
-        wireGeometry,
-        wireMaterial
+
+        edges,
+
+        new THREE.LineBasicMaterial({
+
+            color: 0xffffff
+
+        })
+
     );
 
 
-wireframe.visible =
-    false;
+wire.visible = false;
+
+cube.add(wire);
 
 
-cube.add(wireframe);
+/* =========================================================
+   PREVIEW TEXTURES
+========================================================= */
+
+const materialFaces = [
+
+    "east",
+    "west",
+    "top",
+    "bottom",
+    "south",
+    "north"
+
+];
 
 
+function updatePreview() {
 
-/* ============================================================
-   RENDER LOOP
-   ============================================================ */
-
-function resizeRenderer() {
-
-    const rect =
-        $("viewport").getBoundingClientRect();
+    const orientation =
+        state.previewOrientation;
 
 
-    renderer.setSize(
-        rect.width,
-        rect.height,
-        false
-    );
+    const model =
+        getModelForOrientation(
+            orientation
+        );
 
 
-    camera.aspect =
-        rect.width /
-        rect.height;
+    if (!model) {
+
+        return;
+
+    }
 
 
-    camera.updateProjectionMatrix();
+    /*
+     * Rotate the actual preview
+     * exactly like the blockstate.
+     */
+
+    const rotation =
+        getOrientationRotation(
+            orientation
+        );
+
+
+    cube.rotation.y =
+        THREE.MathUtils.degToRad(
+            rotation
+        );
+
+
+    const loader =
+        new THREE.TextureLoader();
+
+
+    for (
+        let i = 0;
+        i < 6;
+        i++
+    ) {
+
+        const face =
+            materialFaces[i];
+
+
+        const texture =
+            model.textures[
+                face
+            ];
+
+
+        const material =
+            materials[i];
+
+
+        if (!texture) {
+
+            material.map =
+                null;
+
+            material.color.set(
+                0x777777
+            );
+
+            material.needsUpdate =
+                true;
+
+            continue;
+
+        }
+
+
+        const loaded =
+            loader.load(
+                texture.url
+            );
+
+
+        loaded.colorSpace =
+            THREE.SRGBColorSpace;
+
+
+        loaded.magFilter =
+            THREE.NearestFilter;
+
+
+        loaded.minFilter =
+            THREE.NearestFilter;
+
+
+        material.map =
+            loaded;
+
+
+        material.color.set(
+            0xffffff
+        );
+
+
+        material.needsUpdate =
+            true;
+
+    }
+
+
+    wire.visible =
+        state.wireframe;
 
 }
 
 
-window.addEventListener(
-    "resize",
-    resizeRenderer
-);
+/* =========================================================
+   PREVIEW ORIENTATION SELECT
+========================================================= */
+
+function renderPreviewOrientations() {
+
+    const orientations =
+        getOrientations();
 
 
-resizeRenderer();
+    const select =
+        $("previewOrientation");
 
 
-
-function animate() {
-
-    requestAnimationFrame(
-        animate
-    );
+    select.innerHTML = "";
 
 
-    controls.update();
+    for (
+        const orientation
+        of orientations
+    ) {
+
+        const option =
+            document.createElement(
+                "option"
+            );
 
 
-    renderer.render(
-        scene,
-        camera
-    );
+        option.value =
+            orientation;
+
+
+        option.textContent =
+            orientation;
+
+
+        select.appendChild(
+            option
+        );
+
+    }
+
+
+    if (
+        !orientations.includes(
+            state.previewOrientation
+        )
+    ) {
+
+        state.previewOrientation =
+            orientations[0] || "";
+
+    }
+
+
+    select.value =
+        state.previewOrientation;
+
+
+    select.onchange =
+        () => {
+
+            state.previewOrientation =
+                select.value;
+
+            updatePreview();
+            updateJSON();
+
+        };
 
 }
 
 
-animate();
-
-
-
-/* ============================================================
-   RESET VIEW
-   ============================================================ */
+/* =========================================================
+   RESET
+========================================================= */
 
 function resetView() {
 
@@ -1047,895 +2520,9 @@ $("viewport").ondblclick =
     resetView;
 
 
-
-/* ============================================================
-   TEXTURE LIBRARY
-   ============================================================ */
-
-async function addFiles(files) {
-
-    for (const file of files) {
-
-        if (
-            !file.name
-                .toLowerCase()
-                .endsWith(".png")
-        ) {
-            continue;
-        }
-
-
-        const url =
-            URL.createObjectURL(
-                file
-            );
-
-
-        state.library.push({
-
-            id:
-                crypto.randomUUID(),
-
-            name:
-                file.name,
-
-            path:
-                file.webkitRelativePath ||
-                file.name,
-
-            url:
-                url,
-
-            file:
-                file
-
-        });
-
-    }
-
-
-    if (
-        state.library.length === 0
-    ) {
-        return;
-    }
-
-
-    /*
-     * Automatically select the first
-     * texture for empty faces.
-     */
-
-    for (const face of faces) {
-
-        if (
-            !state.textures[face]
-        ) {
-
-            state.textures[face] =
-                state.library[0];
-
-        }
-
-    }
-
-
-    renderTextureLibrary();
-
-    renderFaces();
-
-    updateAll();
-
-}
-
-
-
-/* ============================================================
-   LOAD FOLDER
-   ============================================================ */
-
-$("loadFolder").onclick =
-    () => {
-
-        $("folderInput").click();
-
-    };
-
-
-$("folderInput").onchange =
-    event => {
-
-        addFiles(
-            [...event.target.files]
-        );
-
-    };
-
-
-
-/* ============================================================
-   LOAD INDIVIDUAL PNGS
-   ============================================================ */
-
-$("loadFiles").onclick =
-    () => {
-
-        $("filesInput").click();
-
-    };
-
-
-$("filesInput").onchange =
-    event => {
-
-        addFiles(
-            [...event.target.files]
-        );
-
-    };
-
-
-
-/* ============================================================
-   RENDER TEXTURE LIBRARY
-   ============================================================ */
-
-function renderTextureLibrary() {
-
-    const container =
-        $("textureList");
-
-
-    container.innerHTML =
-        "";
-
-
-    if (
-        state.library.length === 0
-    ) {
-
-        container.innerHTML =
-            `<div class="help">
-                No textures loaded yet.
-            </div>`;
-
-        return;
-
-    }
-
-
-    for (
-        const texture
-        of state.library
-    ) {
-
-        const element =
-            document.createElement(
-                "div"
-            );
-
-
-        element.className =
-            "texture";
-
-
-        element.innerHTML = `
-
-            <img
-                src="${texture.url}"
-            >
-
-            <div class="texture-name">
-                ${escapeHtml(texture.name)}
-            </div>
-
-        `;
-
-
-        /*
-         * Clicking a texture
-         * assigns it to the top.
-         */
-
-        element.onclick =
-            () => {
-
-                state.textures.top =
-                    texture;
-
-
-                updateAll();
-
-            };
-
-
-        container.appendChild(
-            element
-        );
-
-    }
-
-}
-
-
-
-/* ============================================================
-   FACE DROPDOWNS
-   ============================================================ */
-
-function renderFaces() {
-
-    const container =
-        $("faces");
-
-
-    container.innerHTML =
-        "";
-
-
-    const modelType =
-        $("modelType").value;
-
-
-    const visibleFaces =
-        modelType === "cube_all"
-            ? ["top"]
-            : faces;
-
-
-    for (
-        const face
-        of visibleFaces
-    ) {
-
-        const row =
-            document.createElement(
-                "div"
-            );
-
-
-        row.className =
-            "face-row";
-
-
-        const label =
-            document.createElement(
-                "label"
-            );
-
-
-        label.textContent =
-            modelType === "cube_all"
-                ? "all"
-                : face;
-
-
-        row.appendChild(
-            label
-        );
-
-
-        const select =
-            document.createElement(
-                "select"
-            );
-
-
-        for (
-            const texture
-            of state.library
-        ) {
-
-            const option =
-                document.createElement(
-                    "option"
-                );
-
-
-            option.value =
-                texture.id;
-
-
-            option.textContent =
-                texture.name;
-
-
-            select.appendChild(
-                option
-            );
-
-        }
-
-
-        if (
-            state.textures[face]
-        ) {
-
-            select.value =
-                state.textures[face].id;
-
-        }
-
-
-        select.onchange =
-            () => {
-
-                const selected =
-                    state.library.find(
-                        texture =>
-                            texture.id ===
-                            select.value
-                    );
-
-
-                if (!selected) {
-                    return;
-                }
-
-
-                if (
-                    modelType ===
-                    "cube_all"
-                ) {
-
-                    for (
-                        const f
-                        of faces
-                    ) {
-
-                        state.textures[f] =
-                            selected;
-
-                    }
-
-                }
-
-                else {
-
-                    state.textures[face] =
-                        selected;
-
-                }
-
-
-                updateAll();
-
-            };
-
-
-        row.appendChild(
-            select
-        );
-
-
-        container.appendChild(
-            row
-        );
-
-    }
-
-}
-
-
-
-/* ============================================================
-   RESOURCE LOCATION
-   ============================================================ */
-
-function getResourceLocation(
-    texture
-) {
-
-    if (!texture) {
-
-        return "mishanguc:block/missing";
-
-    }
-
-
-    const namespace =
-        $("namespace")
-            .value
-            .trim() ||
-        "mishanguc";
-
-
-    const folder =
-        $("textureFolder")
-            .value
-            .trim() ||
-        "block";
-
-
-    /*
-     * Convert the local file path
-     * into something sensible.
-     *
-     * Example:
-     *
-     * textures/block/asphalt.png
-     *
-     * becomes:
-     *
-     * mishanguc:block/asphalt
-     */
-
-    let path =
-        texture.path
-            .replaceAll("\\", "/");
-
-
-    const textureMarker =
-        "/textures/";
-
-
-    const markerIndex =
-        path.indexOf(
-            textureMarker
-        );
-
-
-    if (
-        markerIndex !== -1
-    ) {
-
-        path =
-            path.substring(
-                markerIndex +
-                textureMarker.length
-            );
-
-    }
-
-
-    path =
-        path.replace(
-            /^textures\//,
-            ""
-        );
-
-
-    path =
-        path.replace(
-            /\.png$/i,
-            ""
-        );
-
-
-    /*
-     * If the file was inside
-     * the selected block folder,
-     * remove that folder.
-     */
-
-    if (
-        path.startsWith(
-            folder + "/"
-        )
-    ) {
-
-        path =
-            path.substring(
-                folder.length + 1
-            );
-
-    }
-
-
-    return (
-        namespace +
-        ":" +
-        folder +
-        "/" +
-        path
-    );
-
-}
-
-
-
-/* ============================================================
-   UPDATE THREE.JS MATERIALS
-   ============================================================ */
-
-/*
- * Three.js BoxGeometry material order:
- *
- * +X = east
- * -X = west
- * +Y = top
- * -Y = bottom
- * +Z = south
- * -Z = north
- */
-
-const materialFaces = [
-
-    "east",
-    "west",
-    "top",
-    "bottom",
-    "south",
-    "north"
-
-];
-
-
-function updateMaterials() {
-
-    const loader =
-        new THREE.TextureLoader();
-
-
-    for (
-        let i = 0;
-        i < 6;
-        i++
-    ) {
-
-        const texture =
-            state.textures[
-                materialFaces[i]
-            ];
-
-
-        const material =
-            materials[i];
-
-
-        if (!texture) {
-
-            material.map =
-                null;
-
-
-            material.color.set(
-                0x666666
-            );
-
-
-            material.needsUpdate =
-                true;
-
-
-            continue;
-
-        }
-
-
-        const loaded =
-            loader.load(
-                texture.url
-            );
-
-
-        loaded.colorSpace =
-            THREE.SRGBColorSpace;
-
-
-        /*
-         * Minecraft textures are
-         * pixel art, so don't blur them.
-         */
-
-        loaded.magFilter =
-            THREE.NearestFilter;
-
-
-        loaded.minFilter =
-            THREE.NearestFilter;
-
-
-        material.map =
-            loaded;
-
-
-        material.color.set(
-            0xffffff
-        );
-
-
-        material.wireframe =
-            state.wireframe;
-
-
-        material.needsUpdate =
-            true;
-
-    }
-
-
-    wireframe.visible =
-        state.wireframe;
-
-}
-
-
-
-/* ============================================================
-   BLOCKSTATE JSON
-   ============================================================ */
-
-function generateBlockstate() {
-
-    const modId =
-        cleanId(
-            $("modId").value
-        );
-
-
-    const blockId =
-        cleanId(
-            $("blockId").value
-        );
-
-
-    return {
-
-        variants: {
-
-            "":
-            {
-                model:
-                    `${modId}:block/${blockId}`
-            }
-
-        }
-
-    };
-
-}
-
-
-
-/* ============================================================
-   MODEL JSON
-   ============================================================ */
-
-function generateModel() {
-
-    const modelType =
-        $("modelType").value;
-
-
-    /*
-     * cube_all
-     */
-
-    if (
-        modelType ===
-        "cube_all"
-    ) {
-
-        return {
-
-            parent:
-                "minecraft:block/cube_all",
-
-            textures: {
-
-                all:
-                    getResourceLocation(
-                        state.textures.top
-                    )
-
-            }
-
-        };
-
-    }
-
-
-    /*
-     * normal cube
-     */
-
-    return {
-
-        parent:
-            "minecraft:block/cube",
-
-        textures: {
-
-            particle:
-                getResourceLocation(
-                    state.textures.top
-                ),
-
-            down:
-                getResourceLocation(
-                    state.textures.bottom
-                ),
-
-            up:
-                getResourceLocation(
-                    state.textures.top
-                ),
-
-            north:
-                getResourceLocation(
-                    state.textures.north
-                ),
-
-            south:
-                getResourceLocation(
-                    state.textures.south
-                ),
-
-            west:
-                getResourceLocation(
-                    state.textures.west
-                ),
-
-            east:
-                getResourceLocation(
-                    state.textures.east
-                )
-
-        }
-
-    };
-
-}
-
-
-
-/* ============================================================
-   UPDATE JSON
-   ============================================================ */
-
-function updateJSON() {
-
-    const output =
-        state.activeTab ===
-        "blockstate"
-
-            ? generateBlockstate()
-
-            : generateModel();
-
-
-    $("json").textContent =
-        JSON.stringify(
-            output,
-            null,
-            2
-        );
-
-
-    const modId =
-        cleanId(
-            $("modId").value
-        );
-
-
-    const blockId =
-        cleanId(
-            $("blockId").value
-        );
-
-
-    $("paths").innerHTML =
-
-        `assets/${modId}/blockstates/${blockId}.json<br>` +
-
-        `assets/${modId}/models/block/${blockId}.json`;
-
-}
-
-
-
-/* ============================================================
-   UPDATE EVERYTHING
-   ============================================================ */
-
-function updateAll() {
-
-    renderFaces();
-
-    updateMaterials();
-
-    updateJSON();
-
-}
-
-
-
-/* ============================================================
-   UTILITY
-   ============================================================ */
-
-function cleanId(
-    value
-) {
-
-    return value
-        .trim()
-        .toLowerCase()
-        .replace(
-            /[^a-z0-9._-]/g,
-            "_"
-        );
-
-}
-
-
-function escapeHtml(
-    value
-) {
-
-    return value.replace(
-        /[&<>"']/g,
-        character => ({
-
-            "&": "&amp;",
-            "<": "&lt;",
-            ">": "&gt;",
-            '"': "&quot;",
-            "'": "&#039;"
-
-        })[character]
-    );
-
-}
-
-
-
-/* ============================================================
-   BUTTONS
-   ============================================================ */
-
-$("sameTop").onclick =
-    () => {
-
-        const texture =
-            state.textures.top;
-
-
-        for (
-            const face
-            of faces
-        ) {
-
-            state.textures[face] =
-                texture;
-
-        }
-
-
-        updateAll();
-
-    };
-
-
-$("sameFirst").onclick =
-    () => {
-
-        const texture =
-            state.library[0] ||
-            null;
-
-
-        for (
-            const face
-            of faces
-        ) {
-
-            state.textures[face] =
-                texture;
-
-        }
-
-
-        updateAll();
-
-    };
-
-
-
-/* ============================================================
+/* =========================================================
    WIREFRAME
-   ============================================================ */
+========================================================= */
 
 $("wireframe").onclick =
     () => {
@@ -1943,16 +2530,124 @@ $("wireframe").onclick =
         state.wireframe =
             !state.wireframe;
 
-
-        updateMaterials();
+        wire.visible =
+            state.wireframe;
 
     };
 
 
+/* =========================================================
+   RESIZE
+========================================================= */
 
-/* ============================================================
+function resizeRenderer() {
+
+    const rect =
+        $("viewport")
+            .getBoundingClientRect();
+
+
+    renderer.setSize(
+        rect.width,
+        rect.height,
+        false
+    );
+
+
+    camera.aspect =
+        rect.width /
+        rect.height;
+
+
+    camera.updateProjectionMatrix();
+
+}
+
+
+window.addEventListener(
+    "resize",
+    resizeRenderer
+);
+
+
+resizeRenderer();
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+function animate() {
+
+    requestAnimationFrame(
+        animate
+    );
+
+
+    controls.update();
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+animate();
+
+
+/* =========================================================
+   BLOCK TYPE
+========================================================= */
+
+$("blockType").onchange =
+    () => {
+
+        setupModelNames();
+
+        renderModelTextureEditors();
+        renderAngleEditor();
+        renderPreviewOrientations();
+
+        updateAll();
+
+    };
+
+
+/* =========================================================
+   DEFAULT ANGLES
+========================================================= */
+
+$("defaultAngles").onclick =
+    () => {
+
+        state.angles = {
+
+            north: 0,
+            east: 90,
+            south: 180,
+            west: 270,
+
+            north_east: 45,
+            south_east: 135,
+            south_west: 225,
+            north_west: 315
+
+        };
+
+
+        renderAngleEditor();
+
+        updateAll();
+
+    };
+
+
+/* =========================================================
    TABS
-   ============================================================ */
+========================================================= */
 
 $("blockstateTab").onclick =
     () => {
@@ -1998,37 +2693,9 @@ $("modelTab").onclick =
     };
 
 
-
-/* ============================================================
-   LIVE INPUTS
-   ============================================================ */
-
-$("modelType").onchange =
-    updateAll;
-
-
-for (
-    const id
-    of [
-        "modId",
-        "blockId",
-        "namespace",
-        "textureFolder"
-    ]
-) {
-
-    $(id).addEventListener(
-        "input",
-        updateJSON
-    );
-
-}
-
-
-
-/* ============================================================
+/* =========================================================
    COPY
-   ============================================================ */
+========================================================= */
 
 $("copy").onclick =
     async () => {
@@ -2038,18 +2705,24 @@ $("copy").onclick =
         );
 
 
+        const button =
+            $("copy");
+
+
         const old =
-            $("copy").textContent;
+            button.textContent;
 
 
-        $("copy").textContent =
+        button.textContent =
             "Copied!";
 
 
         setTimeout(
             () => {
-                $("copy").textContent =
+
+                button.textContent =
                     old;
+
             },
             1000
         );
@@ -2057,10 +2730,9 @@ $("copy").onclick =
     };
 
 
-
-/* ============================================================
+/* =========================================================
    DOWNLOAD
-   ============================================================ */
+========================================================= */
 
 $("download").onclick =
     () => {
@@ -2077,38 +2749,68 @@ $("download").onclick =
             );
 
 
-        const files = [
+        const files = [];
 
-            {
+
+        /*
+         * BLOCKSTATE
+         */
+
+        files.push({
+
+            filename:
+                `${blockId}.json`,
+
+            path:
+                `assets/${modId}/blockstates/${blockId}.json`,
+
+            content:
+                JSON.stringify(
+                    generateBlockstate(),
+                    null,
+                    2
+                )
+
+        });
+
+
+        /*
+         * MODELS
+         */
+
+        for (
+            const model
+            of getModelFiles()
+        ) {
+
+            files.push({
 
                 filename:
-                    `${blockId}_blockstate.json`,
+                    `${model.name}.json`,
+
+                path:
+                    `assets/${modId}/models/block/${model.name}.json`,
 
                 content:
                     JSON.stringify(
-                        generateBlockstate(),
+                        generateModel(model),
                         null,
                         2
                     )
 
-            },
+            });
 
-            {
+        }
 
-                filename:
-                    `${blockId}_model.json`,
 
-                content:
-                    JSON.stringify(
-                        generateModel(),
-                        null,
-                        2
-                    )
-
-            }
-
-        ];
-
+        /*
+         * Browsers cannot directly
+         * create folders during a
+         * normal download.
+         *
+         * Therefore each file gets
+         * downloaded individually.
+         */
 
         for (
             const file
@@ -2117,11 +2819,14 @@ $("download").onclick =
 
             const blob =
                 new Blob(
+
                     [file.content],
+
                     {
                         type:
                             "application/json"
                     }
+
                 );
 
 
@@ -2145,11 +2850,23 @@ $("download").onclick =
                 file.filename;
 
 
+            document.body.appendChild(
+                link
+            );
+
+
             link.click();
 
 
-            URL.revokeObjectURL(
-                url
+            link.remove();
+
+
+            setTimeout(
+                () =>
+                    URL.revokeObjectURL(
+                        url
+                    ),
+                1000
             );
 
         }
@@ -2157,14 +2874,71 @@ $("download").onclick =
     };
 
 
+/* =========================================================
+   LIVE INPUTS
+========================================================= */
 
-/* ============================================================
-   INITIAL STATE
-   ============================================================ */
+for (
+    const id of [
+        "modId",
+        "blockId"
+    ]
+) {
+
+    $(id).addEventListener(
+        "input",
+        () => {
+
+            if (
+                id === "blockId"
+            ) {
+
+                /*
+                 * Only update the automatic
+                 * names if they haven't been
+                 * manually changed.
+                 */
+
+            }
+
+            updateAll();
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   UPDATE EVERYTHING
+========================================================= */
+
+function updateAll() {
+
+    setupModelNames();
+
+    renderPreviewOrientations();
+
+    updatePreview();
+
+    updateJSON();
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+setupModelNames();
 
 renderTextureLibrary();
 
-renderFaces();
+renderModelTextureEditors();
+
+renderAngleEditor();
+
+renderPreviewOrientations();
 
 updateAll();
 
