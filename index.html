@@ -1,0 +1,2174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mishang Block Builder</title>
+
+<style>
+:root {
+    --bg: #15171a;
+    --panel: #202329;
+    --panel2: #292d34;
+    --border: #3a4049;
+    --text: #eef1f4;
+    --muted: #aeb5bf;
+    --accent: #6ea8fe;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, sans-serif;
+}
+
+header {
+    padding: 20px 26px;
+    background: #1b1e22;
+    border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+    margin: 0 0 4px;
+    font-size: 24px;
+}
+
+header p {
+    margin: 0;
+    color: var(--muted);
+}
+
+main {
+    max-width: 1450px;
+    margin: auto;
+    padding: 20px;
+
+    display: grid;
+    grid-template-columns: 430px 1fr;
+    gap: 18px;
+}
+
+.panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 17px;
+}
+
+h2 {
+    margin: 0 0 14px;
+    font-size: 18px;
+}
+
+.section {
+    margin-bottom: 24px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+input,
+select,
+button {
+    font: inherit;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 8px 9px;
+
+    color: var(--text);
+    background: var(--panel2);
+
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+button {
+    padding: 8px 11px;
+
+    color: var(--text);
+    background: var(--panel2);
+
+    border: 1px solid var(--border);
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+button:hover {
+    background: #363b44;
+}
+
+button.primary {
+    background: #315f9e;
+    border-color: #4d82c8;
+}
+
+button.primary:hover {
+    background: #3c70b5;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+}
+
+.buttons {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+.help {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.face-row {
+    display: grid;
+    grid-template-columns: 65px 1fr;
+    gap: 7px;
+
+    align-items: center;
+    margin: 8px 0;
+}
+
+.face-row label {
+    margin: 0;
+}
+
+.texture-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 7px;
+
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.texture {
+    padding: 4px;
+
+    background: var(--panel2);
+
+    border: 1px solid var(--border);
+    border-radius: 6px;
+
+    cursor: pointer;
+}
+
+.texture:hover {
+    border-color: var(--accent);
+}
+
+.texture img {
+    display: block;
+
+    width: 100%;
+    aspect-ratio: 1;
+
+    object-fit: contain;
+
+    background: #555;
+
+    image-rendering: pixelated;
+
+    border-radius: 3px;
+}
+
+.texture-name {
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.preview-layout {
+    display: grid;
+    grid-template-columns: minmax(400px, 1fr) 430px;
+
+    gap: 16px;
+}
+
+#viewport {
+    position: relative;
+
+    height: 600px;
+
+    overflow: hidden;
+
+    background: #101215;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+#viewport canvas {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+}
+
+.controls-help {
+    position: absolute;
+
+    top: 10px;
+    left: 10px;
+
+    padding: 8px 10px;
+
+    color: #d0d5dc;
+    background: rgba(10, 12, 15, .75);
+
+    border-radius: 6px;
+
+    font-size: 12px;
+
+    pointer-events: none;
+}
+
+.tabs {
+    display: flex;
+    gap: 6px;
+
+    margin-bottom: 8px;
+}
+
+.tabs button.active {
+    background: #3a4049;
+}
+
+pre {
+    margin: 0;
+
+    min-height: 300px;
+    max-height: 520px;
+
+    padding: 14px;
+
+    overflow: auto;
+
+    color: #e6e9ed;
+    background: #101215;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    font-family: Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.45;
+
+    white-space: pre-wrap;
+}
+
+.paths {
+    padding: 10px;
+
+    background: #191c20;
+
+    border: 1px solid var(--border);
+    border-radius: 6px;
+
+    color: #c9ced6;
+
+    font-family: Consolas, monospace;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+@media (max-width: 1050px) {
+
+    main {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+    <h1>Mishang Block Builder</h1>
+
+    <p>
+        Minecraft 1.20.1 Fabric blockstate/model generator
+        with real PNG textures and an interactive 3D preview.
+    </p>
+
+</header>
+
+
+<main>
+
+
+<!-- ========================================================= -->
+<!-- LEFT PANEL -->
+<!-- ========================================================= -->
+
+<section class="panel">
+
+
+<div class="section">
+
+    <h2>Block</h2>
+
+    <div class="row">
+
+        <div>
+
+            <label>
+                Mod ID
+            </label>
+
+            <input
+                id="modId"
+                type="text"
+                value="red_mishanguc_roads"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Block ID
+            </label>
+
+            <input
+                id="blockId"
+                type="text"
+                value="road_with_red_line"
+            >
+
+        </div>
+
+    </div>
+
+
+    <div style="margin-top:10px">
+
+        <label>
+            Model type
+        </label>
+
+        <select id="modelType">
+
+            <option value="cube">
+                Cube
+            </option>
+
+            <option value="cube_all">
+                Cube All
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- TEXTURE LIBRARY -->
+<!-- ========================================================= -->
+
+<div class="section">
+
+    <h2>
+        Texture Library
+    </h2>
+
+
+    <div class="buttons">
+
+        <button id="loadFolder">
+            Load texture folder
+        </button>
+
+        <button id="loadFiles">
+            Add PNGs
+        </button>
+
+    </div>
+
+
+    <input
+        id="folderInput"
+        type="file"
+        webkitdirectory
+        multiple
+        accept="image/png"
+        hidden
+    >
+
+
+    <input
+        id="filesInput"
+        type="file"
+        multiple
+        accept="image/png"
+        hidden
+    >
+
+
+    <p class="help">
+
+        Your PNG files stay in your browser.
+        They are not uploaded anywhere.
+
+    </p>
+
+
+    <div
+        id="textureList"
+        class="texture-list"
+    ></div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- FACES -->
+<!-- ========================================================= -->
+
+<div class="section">
+
+    <h2>
+        Block Faces
+    </h2>
+
+
+    <div id="faces"></div>
+
+
+    <div class="buttons">
+
+        <button id="sameTop">
+            Set all to top
+        </button>
+
+
+        <button id="sameFirst">
+            Set all to first texture
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- RESOURCE PATH -->
+<!-- ========================================================= -->
+
+<div class="section">
+
+    <h2>
+        Resource Paths
+    </h2>
+
+
+    <div class="row">
+
+        <div>
+
+            <label>
+                Default namespace
+            </label>
+
+            <input
+                id="namespace"
+                type="text"
+                value="mishanguc"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Texture folder
+            </label>
+
+            <input
+                id="textureFolder"
+                type="text"
+                value="block"
+            >
+
+        </div>
+
+    </div>
+
+
+    <p class="help">
+
+        The PNG is used for the preview.
+        The resource location is used in the generated JSON.
+
+    </p>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- OUTPUT -->
+<!-- ========================================================= -->
+
+<div class="section">
+
+    <h2>
+        Output
+    </h2>
+
+
+    <div
+        id="paths"
+        class="paths"
+    ></div>
+
+
+    <div
+        class="buttons"
+        style="margin-top:10px"
+    >
+
+        <button
+            id="copy"
+            class="primary"
+        >
+            Copy JSON
+        </button>
+
+
+        <button
+            id="download"
+            class="primary"
+        >
+            Download JSON files
+        </button>
+
+    </div>
+
+</div>
+
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- RIGHT PANEL -->
+<!-- ========================================================= -->
+
+<section class="panel">
+
+    <h2>
+        3D Preview
+    </h2>
+
+
+    <div class="preview-layout">
+
+
+        <div id="viewport">
+
+            <div class="controls-help">
+
+                Left drag: rotate<br>
+                Wheel: zoom<br>
+                Middle drag: pan<br>
+                Double-click: reset
+
+            </div>
+
+        </div>
+
+
+        <div>
+
+
+            <div class="tabs">
+
+                <button
+                    id="blockstateTab"
+                    class="active"
+                >
+                    blockstate.json
+                </button>
+
+
+                <button
+                    id="modelTab"
+                >
+                    model.json
+                </button>
+
+            </div>
+
+
+            <pre id="json"></pre>
+
+
+            <div
+                class="buttons"
+                style="margin-top:10px"
+            >
+
+                <button id="wireframe">
+                    Toggle wireframe
+                </button>
+
+
+                <button id="reset">
+                    Reset view
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- ========================================================= -->
+<!-- THREE.JS -->
+<!-- ========================================================= -->
+
+<script type="importmap">
+
+{
+    "imports": {
+        "three":
+            "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js",
+
+        "three/addons/":
+            "https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"
+    }
+}
+
+</script>
+
+
+<script type="module">
+
+import * as THREE
+    from "three";
+
+
+import {
+    OrbitControls
+}
+from "three/addons/controls/OrbitControls.js";
+
+
+
+/* ============================================================
+   APPLICATION STATE
+   ============================================================ */
+
+const faces = [
+
+    "top",
+    "bottom",
+    "north",
+    "south",
+    "west",
+    "east"
+
+];
+
+
+const state = {
+
+    library: [],
+
+    textures: {},
+
+    activeTab: "blockstate",
+
+    wireframe: false
+
+};
+
+
+for (const face of faces) {
+
+    state.textures[face] = null;
+
+}
+
+
+
+/* ============================================================
+   SHORTCUT
+   ============================================================ */
+
+function $(id) {
+
+    return document.getElementById(id);
+
+}
+
+
+
+/* ============================================================
+   THREE.JS SCENE
+   ============================================================ */
+
+const scene =
+    new THREE.Scene();
+
+
+scene.background =
+    new THREE.Color(0x101215);
+
+
+
+const camera =
+    new THREE.PerspectiveCamera(
+        35,
+        1,
+        0.1,
+        100
+    );
+
+
+camera.position.set(
+    4.2,
+    3.2,
+    4.2
+);
+
+
+
+const renderer =
+    new THREE.WebGLRenderer({
+        antialias: true
+    });
+
+
+renderer.setPixelRatio(
+    Math.min(
+        window.devicePixelRatio,
+        2
+    )
+);
+
+
+renderer.outputColorSpace =
+    THREE.SRGBColorSpace;
+
+
+$("viewport").appendChild(
+    renderer.domElement
+);
+
+
+
+const controls =
+    new OrbitControls(
+        camera,
+        renderer.domElement
+    );
+
+
+controls.enableDamping =
+    true;
+
+
+controls.target.set(
+    0,
+    0,
+    0
+);
+
+
+controls.minDistance =
+    2.2;
+
+
+controls.maxDistance =
+    10;
+
+
+
+/* ============================================================
+   LIGHTING
+   ============================================================ */
+
+scene.add(
+    new THREE.HemisphereLight(
+        0xffffff,
+        0x303030,
+        2
+    )
+);
+
+
+const directional =
+    new THREE.DirectionalLight(
+        0xffffff,
+        2.5
+    );
+
+
+directional.position.set(
+    4,
+    7,
+    5
+);
+
+
+scene.add(
+    directional
+);
+
+
+
+/* ============================================================
+   GRID
+   ============================================================ */
+
+const grid =
+    new THREE.GridHelper(
+        8,
+        8,
+        0x555555,
+        0x292d33
+    );
+
+
+grid.position.y =
+    -1.01;
+
+
+scene.add(grid);
+
+
+
+/* ============================================================
+   CUBE
+   ============================================================ */
+
+const geometry =
+    new THREE.BoxGeometry(
+        2,
+        2,
+        2
+    );
+
+
+const materials = [];
+
+
+for (let i = 0; i < 6; i++) {
+
+    materials.push(
+        new THREE.MeshStandardMaterial({
+            color: 0x666666
+        })
+    );
+
+}
+
+
+const cube =
+    new THREE.Mesh(
+        geometry,
+        materials
+    );
+
+
+scene.add(cube);
+
+
+
+/* ============================================================
+   WIREFRAME
+   ============================================================ */
+
+const wireGeometry =
+    new THREE.EdgesGeometry(
+        geometry
+    );
+
+
+const wireMaterial =
+    new THREE.LineBasicMaterial({
+        color: 0xffffff
+    });
+
+
+const wireframe =
+    new THREE.LineSegments(
+        wireGeometry,
+        wireMaterial
+    );
+
+
+wireframe.visible =
+    false;
+
+
+cube.add(wireframe);
+
+
+
+/* ============================================================
+   RENDER LOOP
+   ============================================================ */
+
+function resizeRenderer() {
+
+    const rect =
+        $("viewport").getBoundingClientRect();
+
+
+    renderer.setSize(
+        rect.width,
+        rect.height,
+        false
+    );
+
+
+    camera.aspect =
+        rect.width /
+        rect.height;
+
+
+    camera.updateProjectionMatrix();
+
+}
+
+
+window.addEventListener(
+    "resize",
+    resizeRenderer
+);
+
+
+resizeRenderer();
+
+
+
+function animate() {
+
+    requestAnimationFrame(
+        animate
+    );
+
+
+    controls.update();
+
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
+
+
+animate();
+
+
+
+/* ============================================================
+   RESET VIEW
+   ============================================================ */
+
+function resetView() {
+
+    camera.position.set(
+        4.2,
+        3.2,
+        4.2
+    );
+
+
+    controls.target.set(
+        0,
+        0,
+        0
+    );
+
+
+    controls.update();
+
+}
+
+
+$("reset").onclick =
+    resetView;
+
+
+$("viewport").ondblclick =
+    resetView;
+
+
+
+/* ============================================================
+   TEXTURE LIBRARY
+   ============================================================ */
+
+async function addFiles(files) {
+
+    for (const file of files) {
+
+        if (
+            !file.name
+                .toLowerCase()
+                .endsWith(".png")
+        ) {
+            continue;
+        }
+
+
+        const url =
+            URL.createObjectURL(
+                file
+            );
+
+
+        state.library.push({
+
+            id:
+                crypto.randomUUID(),
+
+            name:
+                file.name,
+
+            path:
+                file.webkitRelativePath ||
+                file.name,
+
+            url:
+                url,
+
+            file:
+                file
+
+        });
+
+    }
+
+
+    if (
+        state.library.length === 0
+    ) {
+        return;
+    }
+
+
+    /*
+     * Automatically select the first
+     * texture for empty faces.
+     */
+
+    for (const face of faces) {
+
+        if (
+            !state.textures[face]
+        ) {
+
+            state.textures[face] =
+                state.library[0];
+
+        }
+
+    }
+
+
+    renderTextureLibrary();
+
+    renderFaces();
+
+    updateAll();
+
+}
+
+
+
+/* ============================================================
+   LOAD FOLDER
+   ============================================================ */
+
+$("loadFolder").onclick =
+    () => {
+
+        $("folderInput").click();
+
+    };
+
+
+$("folderInput").onchange =
+    event => {
+
+        addFiles(
+            [...event.target.files]
+        );
+
+    };
+
+
+
+/* ============================================================
+   LOAD INDIVIDUAL PNGS
+   ============================================================ */
+
+$("loadFiles").onclick =
+    () => {
+
+        $("filesInput").click();
+
+    };
+
+
+$("filesInput").onchange =
+    event => {
+
+        addFiles(
+            [...event.target.files]
+        );
+
+    };
+
+
+
+/* ============================================================
+   RENDER TEXTURE LIBRARY
+   ============================================================ */
+
+function renderTextureLibrary() {
+
+    const container =
+        $("textureList");
+
+
+    container.innerHTML =
+        "";
+
+
+    if (
+        state.library.length === 0
+    ) {
+
+        container.innerHTML =
+            `<div class="help">
+                No textures loaded yet.
+            </div>`;
+
+        return;
+
+    }
+
+
+    for (
+        const texture
+        of state.library
+    ) {
+
+        const element =
+            document.createElement(
+                "div"
+            );
+
+
+        element.className =
+            "texture";
+
+
+        element.innerHTML = `
+
+            <img
+                src="${texture.url}"
+            >
+
+            <div class="texture-name">
+                ${escapeHtml(texture.name)}
+            </div>
+
+        `;
+
+
+        /*
+         * Clicking a texture
+         * assigns it to the top.
+         */
+
+        element.onclick =
+            () => {
+
+                state.textures.top =
+                    texture;
+
+
+                updateAll();
+
+            };
+
+
+        container.appendChild(
+            element
+        );
+
+    }
+
+}
+
+
+
+/* ============================================================
+   FACE DROPDOWNS
+   ============================================================ */
+
+function renderFaces() {
+
+    const container =
+        $("faces");
+
+
+    container.innerHTML =
+        "";
+
+
+    const modelType =
+        $("modelType").value;
+
+
+    const visibleFaces =
+        modelType === "cube_all"
+            ? ["top"]
+            : faces;
+
+
+    for (
+        const face
+        of visibleFaces
+    ) {
+
+        const row =
+            document.createElement(
+                "div"
+            );
+
+
+        row.className =
+            "face-row";
+
+
+        const label =
+            document.createElement(
+                "label"
+            );
+
+
+        label.textContent =
+            modelType === "cube_all"
+                ? "all"
+                : face;
+
+
+        row.appendChild(
+            label
+        );
+
+
+        const select =
+            document.createElement(
+                "select"
+            );
+
+
+        for (
+            const texture
+            of state.library
+        ) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                texture.id;
+
+
+            option.textContent =
+                texture.name;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+
+
+        if (
+            state.textures[face]
+        ) {
+
+            select.value =
+                state.textures[face].id;
+
+        }
+
+
+        select.onchange =
+            () => {
+
+                const selected =
+                    state.library.find(
+                        texture =>
+                            texture.id ===
+                            select.value
+                    );
+
+
+                if (!selected) {
+                    return;
+                }
+
+
+                if (
+                    modelType ===
+                    "cube_all"
+                ) {
+
+                    for (
+                        const f
+                        of faces
+                    ) {
+
+                        state.textures[f] =
+                            selected;
+
+                    }
+
+                }
+
+                else {
+
+                    state.textures[face] =
+                        selected;
+
+                }
+
+
+                updateAll();
+
+            };
+
+
+        row.appendChild(
+            select
+        );
+
+
+        container.appendChild(
+            row
+        );
+
+    }
+
+}
+
+
+
+/* ============================================================
+   RESOURCE LOCATION
+   ============================================================ */
+
+function getResourceLocation(
+    texture
+) {
+
+    if (!texture) {
+
+        return "mishanguc:block/missing";
+
+    }
+
+
+    const namespace =
+        $("namespace")
+            .value
+            .trim() ||
+        "mishanguc";
+
+
+    const folder =
+        $("textureFolder")
+            .value
+            .trim() ||
+        "block";
+
+
+    /*
+     * Convert the local file path
+     * into something sensible.
+     *
+     * Example:
+     *
+     * textures/block/asphalt.png
+     *
+     * becomes:
+     *
+     * mishanguc:block/asphalt
+     */
+
+    let path =
+        texture.path
+            .replaceAll("\\", "/");
+
+
+    const textureMarker =
+        "/textures/";
+
+
+    const markerIndex =
+        path.indexOf(
+            textureMarker
+        );
+
+
+    if (
+        markerIndex !== -1
+    ) {
+
+        path =
+            path.substring(
+                markerIndex +
+                textureMarker.length
+            );
+
+    }
+
+
+    path =
+        path.replace(
+            /^textures\//,
+            ""
+        );
+
+
+    path =
+        path.replace(
+            /\.png$/i,
+            ""
+        );
+
+
+    /*
+     * If the file was inside
+     * the selected block folder,
+     * remove that folder.
+     */
+
+    if (
+        path.startsWith(
+            folder + "/"
+        )
+    ) {
+
+        path =
+            path.substring(
+                folder.length + 1
+            );
+
+    }
+
+
+    return (
+        namespace +
+        ":" +
+        folder +
+        "/" +
+        path
+    );
+
+}
+
+
+
+/* ============================================================
+   UPDATE THREE.JS MATERIALS
+   ============================================================ */
+
+/*
+ * Three.js BoxGeometry material order:
+ *
+ * +X = east
+ * -X = west
+ * +Y = top
+ * -Y = bottom
+ * +Z = south
+ * -Z = north
+ */
+
+const materialFaces = [
+
+    "east",
+    "west",
+    "top",
+    "bottom",
+    "south",
+    "north"
+
+];
+
+
+function updateMaterials() {
+
+    const loader =
+        new THREE.TextureLoader();
+
+
+    for (
+        let i = 0;
+        i < 6;
+        i++
+    ) {
+
+        const texture =
+            state.textures[
+                materialFaces[i]
+            ];
+
+
+        const material =
+            materials[i];
+
+
+        if (!texture) {
+
+            material.map =
+                null;
+
+
+            material.color.set(
+                0x666666
+            );
+
+
+            material.needsUpdate =
+                true;
+
+
+            continue;
+
+        }
+
+
+        const loaded =
+            loader.load(
+                texture.url
+            );
+
+
+        loaded.colorSpace =
+            THREE.SRGBColorSpace;
+
+
+        /*
+         * Minecraft textures are
+         * pixel art, so don't blur them.
+         */
+
+        loaded.magFilter =
+            THREE.NearestFilter;
+
+
+        loaded.minFilter =
+            THREE.NearestFilter;
+
+
+        material.map =
+            loaded;
+
+
+        material.color.set(
+            0xffffff
+        );
+
+
+        material.wireframe =
+            state.wireframe;
+
+
+        material.needsUpdate =
+            true;
+
+    }
+
+
+    wireframe.visible =
+        state.wireframe;
+
+}
+
+
+
+/* ============================================================
+   BLOCKSTATE JSON
+   ============================================================ */
+
+function generateBlockstate() {
+
+    const modId =
+        cleanId(
+            $("modId").value
+        );
+
+
+    const blockId =
+        cleanId(
+            $("blockId").value
+        );
+
+
+    return {
+
+        variants: {
+
+            "":
+            {
+                model:
+                    `${modId}:block/${blockId}`
+            }
+
+        }
+
+    };
+
+}
+
+
+
+/* ============================================================
+   MODEL JSON
+   ============================================================ */
+
+function generateModel() {
+
+    const modelType =
+        $("modelType").value;
+
+
+    /*
+     * cube_all
+     */
+
+    if (
+        modelType ===
+        "cube_all"
+    ) {
+
+        return {
+
+            parent:
+                "minecraft:block/cube_all",
+
+            textures: {
+
+                all:
+                    getResourceLocation(
+                        state.textures.top
+                    )
+
+            }
+
+        };
+
+    }
+
+
+    /*
+     * normal cube
+     */
+
+    return {
+
+        parent:
+            "minecraft:block/cube",
+
+        textures: {
+
+            particle:
+                getResourceLocation(
+                    state.textures.top
+                ),
+
+            down:
+                getResourceLocation(
+                    state.textures.bottom
+                ),
+
+            up:
+                getResourceLocation(
+                    state.textures.top
+                ),
+
+            north:
+                getResourceLocation(
+                    state.textures.north
+                ),
+
+            south:
+                getResourceLocation(
+                    state.textures.south
+                ),
+
+            west:
+                getResourceLocation(
+                    state.textures.west
+                ),
+
+            east:
+                getResourceLocation(
+                    state.textures.east
+                )
+
+        }
+
+    };
+
+}
+
+
+
+/* ============================================================
+   UPDATE JSON
+   ============================================================ */
+
+function updateJSON() {
+
+    const output =
+        state.activeTab ===
+        "blockstate"
+
+            ? generateBlockstate()
+
+            : generateModel();
+
+
+    $("json").textContent =
+        JSON.stringify(
+            output,
+            null,
+            2
+        );
+
+
+    const modId =
+        cleanId(
+            $("modId").value
+        );
+
+
+    const blockId =
+        cleanId(
+            $("blockId").value
+        );
+
+
+    $("paths").innerHTML =
+
+        `assets/${modId}/blockstates/${blockId}.json<br>` +
+
+        `assets/${modId}/models/block/${blockId}.json`;
+
+}
+
+
+
+/* ============================================================
+   UPDATE EVERYTHING
+   ============================================================ */
+
+function updateAll() {
+
+    renderFaces();
+
+    updateMaterials();
+
+    updateJSON();
+
+}
+
+
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+
+function cleanId(
+    value
+) {
+
+    return value
+        .trim()
+        .toLowerCase()
+        .replace(
+            /[^a-z0-9._-]/g,
+            "_"
+        );
+
+}
+
+
+function escapeHtml(
+    value
+) {
+
+    return value.replace(
+        /[&<>"']/g,
+        character => ({
+
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+
+        })[character]
+    );
+
+}
+
+
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+$("sameTop").onclick =
+    () => {
+
+        const texture =
+            state.textures.top;
+
+
+        for (
+            const face
+            of faces
+        ) {
+
+            state.textures[face] =
+                texture;
+
+        }
+
+
+        updateAll();
+
+    };
+
+
+$("sameFirst").onclick =
+    () => {
+
+        const texture =
+            state.library[0] ||
+            null;
+
+
+        for (
+            const face
+            of faces
+        ) {
+
+            state.textures[face] =
+                texture;
+
+        }
+
+
+        updateAll();
+
+    };
+
+
+
+/* ============================================================
+   WIREFRAME
+   ============================================================ */
+
+$("wireframe").onclick =
+    () => {
+
+        state.wireframe =
+            !state.wireframe;
+
+
+        updateMaterials();
+
+    };
+
+
+
+/* ============================================================
+   TABS
+   ============================================================ */
+
+$("blockstateTab").onclick =
+    () => {
+
+        state.activeTab =
+            "blockstate";
+
+
+        $("blockstateTab")
+            .classList
+            .add("active");
+
+
+        $("modelTab")
+            .classList
+            .remove("active");
+
+
+        updateJSON();
+
+    };
+
+
+$("modelTab").onclick =
+    () => {
+
+        state.activeTab =
+            "model";
+
+
+        $("modelTab")
+            .classList
+            .add("active");
+
+
+        $("blockstateTab")
+            .classList
+            .remove("active");
+
+
+        updateJSON();
+
+    };
+
+
+
+/* ============================================================
+   LIVE INPUTS
+   ============================================================ */
+
+$("modelType").onchange =
+    updateAll;
+
+
+for (
+    const id
+    of [
+        "modId",
+        "blockId",
+        "namespace",
+        "textureFolder"
+    ]
+) {
+
+    $(id).addEventListener(
+        "input",
+        updateJSON
+    );
+
+}
+
+
+
+/* ============================================================
+   COPY
+   ============================================================ */
+
+$("copy").onclick =
+    async () => {
+
+        await navigator.clipboard.writeText(
+            $("json").textContent
+        );
+
+
+        const old =
+            $("copy").textContent;
+
+
+        $("copy").textContent =
+            "Copied!";
+
+
+        setTimeout(
+            () => {
+                $("copy").textContent =
+                    old;
+            },
+            1000
+        );
+
+    };
+
+
+
+/* ============================================================
+   DOWNLOAD
+   ============================================================ */
+
+$("download").onclick =
+    () => {
+
+        const modId =
+            cleanId(
+                $("modId").value
+            );
+
+
+        const blockId =
+            cleanId(
+                $("blockId").value
+            );
+
+
+        const files = [
+
+            {
+
+                filename:
+                    `${blockId}_blockstate.json`,
+
+                content:
+                    JSON.stringify(
+                        generateBlockstate(),
+                        null,
+                        2
+                    )
+
+            },
+
+            {
+
+                filename:
+                    `${blockId}_model.json`,
+
+                content:
+                    JSON.stringify(
+                        generateModel(),
+                        null,
+                        2
+                    )
+
+            }
+
+        ];
+
+
+        for (
+            const file
+            of files
+        ) {
+
+            const blob =
+                new Blob(
+                    [file.content],
+                    {
+                        type:
+                            "application/json"
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(
+                    blob
+                );
+
+
+            const link =
+                document.createElement(
+                    "a"
+                );
+
+
+            link.href =
+                url;
+
+
+            link.download =
+                file.filename;
+
+
+            link.click();
+
+
+            URL.revokeObjectURL(
+                url
+            );
+
+        }
+
+    };
+
+
+
+/* ============================================================
+   INITIAL STATE
+   ============================================================ */
+
+renderTextureLibrary();
+
+renderFaces();
+
+updateAll();
+
+</script>
+
+</body>
+</html>
